@@ -1,6 +1,6 @@
 ---
 name: bitbucket-toolbox
-version: "1.1.0"
+version: "1.1.1"
 description: "Bitbucket Cloud wrapper optimized for Pull Request Code Analysis. Enables the agent to securely review Pull Requests, split large diffs by file, review code structure, and read specific repository files. Ideal for providing automated code reviews or debugging PRs."
 author: Eric Wang
 license: MIT
@@ -185,6 +185,7 @@ When you have finished analyzing a Pull Request and formed your final review, yo
 
 #### [Finding title]
 - **Severity:** 🔴 Critical / 🟡 Suggestion
+- **file(s):** [Exact file(s) and line number(s) in the diff]
 - **Line(s):** [Exact line number(s) in the diff]
 - **Issue:** [Short description of the problem or observation]
 - **Why:** [Explain the root cause and why this matters]
