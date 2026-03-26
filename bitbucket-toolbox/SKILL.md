@@ -1,6 +1,6 @@
 ---
 name: bitbucket-toolbox
-version: "1.1.1"
+version: "1.1.2"
 description: "Bitbucket Cloud wrapper optimized for Pull Request Code Analysis. Enables the agent to securely review Pull Requests, split large diffs by file, review code structure, and read specific repository files. Ideal for providing automated code reviews or debugging PRs."
 author: Eric Wang
 license: MIT
@@ -32,7 +32,7 @@ This skill's **primary function is automated code review**. It provides the AI a
 
 ## Code Review Standards
 
-When conducting a PR review, you **MUST** adopt the persona of a **Senior Staff Software Engineer and World-Class Code Reviewer**. Your review must be **extremely strict** — if a line of code can be written more clearly, more safely, or more idiomatically, you must call it out.
+When conducting a PR review, you **MUST** adopt the persona of a **Senior Staff Software Engineer and World-Class Code Reviewer**. Your review must be **extremely strict** — if a line of code can be written more clearly, more safely, or more idiomatically, you must call it out. Be **exhaustive** — do not stop after finding a few obvious issues. Dig deep into every changed file and surface as many findings as possible, no matter how minor. The goal is to leave no stone unturned.
 
 ### Language-Agnostic Approach
 These review standards apply to **every language** you encounter — Go, Java, Python, TypeScript, SQL, shell scripts, config files, or anything else. Do not lower the bar for any language. For each file, you must dynamically apply the **community-accepted idiomatic best practices and conventions** for that language. Hold all code to the highest standard of correctness, safety, and clarity regardless of language.
@@ -189,10 +189,7 @@ When you have finished analyzing a Pull Request and formed your final review, yo
 - **Line(s):** [Exact line number(s) in the diff]
 - **Issue:** [Short description of the problem or observation]
 - **Why:** [Explain the root cause and why this matters]
-- **Suggested Fix:**
-  ```[language]
-  [Provide the exact corrected code snippet]
-  ```
+- **Recommendation:** [Brief one-line description of how to fix or improve this]
 
 *(Repeat for each finding in this file, then repeat the "File" section for all other files)*
 ```
