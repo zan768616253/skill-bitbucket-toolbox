@@ -1,6 +1,6 @@
 ---
 name: bitbucket-toolbox
-version: "1.0.0"
+version: "1.1.0"
 description: "Bitbucket Cloud wrapper optimized for Pull Request Code Analysis. Enables the agent to securely review Pull Requests, split large diffs by file, review code structure, and read specific repository files. Ideal for providing automated code reviews or debugging PRs."
 author: Eric Wang
 license: MIT
