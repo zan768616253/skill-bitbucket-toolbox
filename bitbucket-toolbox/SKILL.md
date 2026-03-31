@@ -12,11 +12,10 @@ capabilities:
   - id: bitbucket-repo-browse
     description: "Browse Bitbucket Cloud repositories, branches, files, and directory listings"
 metadata:
-  clawdbot:
-    emoji: "🛠️"
-    requires:
-      env: ["BITBUCKET_API_TOKEN", "BITBUCKET_WORKSPACE"]
-      bins: ["curl", "python3"]
+  emoji: "🛠️"
+  requires:
+    env: ["BITBUCKET_API_TOKEN", "BITBUCKET_WORKSPACE"]
+    bins: ["curl", "python3"]
 ---
 
 # Bitbucket PR Code Reviewer Skill
