@@ -1,26 +1,41 @@
 ---
 name: bitbucket-toolbox
-version: "1.1.2"
+version: "1.1.1"
 description: "Bitbucket Cloud wrapper optimized for Pull Request Code Analysis. Enables the agent to securely review Pull Requests, split large diffs by file, review code structure, and read specific repository files. Ideal for providing automated code reviews or debugging PRs."
 author: Eric Wang
 license: MIT
 homepage: "https://github.com/zan768616253/skill-bitbucket-toolbox"
-files: ["bb-cli.sh"]
+files: ["bb-cli.sh", "bb-cli.ps1"]
 capabilities:
   - id: bitbucket-pr-review
     description: "Review and analyze Bitbucket Cloud Pull Requests including diffs, comments, and commits"
   - id: bitbucket-repo-browse
     description: "Browse Bitbucket Cloud repositories, branches, files, and directory listings"
 metadata:
-  emoji: "🛠️"
-  requires:
-    env: ["BITBUCKET_API_TOKEN", "BITBUCKET_WORKSPACE"]
-    bins: ["curl", "python3"]
+  clawdbot:
+    emoji: "🛠️"
+    requires:
+      env: ["BITBUCKET_API_TOKEN", "BITBUCKET_WORKSPACE"]
+      bins:
+        linux: ["curl", "python3"]
+        darwin: ["curl", "python3"]
+        windows: ["pwsh"]
 ---
 
 # Bitbucket PR Code Reviewer Skill
 
-This skill's **primary function is automated code review**. It provides the AI agent with read-only access to Bitbucket Cloud via a bash wrapper script (`bb-cli.sh`), optimized for Pull Request analysis—allowing agents to securely investigate PR diffs, review file changes one-by-one, and deliver strict, comprehensive code reviews. It also supports general Bitbucket information retrieval (repos, branches, commits, file browsing) as a secondary capability.
+This skill's **primary function is automated code review**. It provides the AI agent with read-only access to Bitbucket Cloud via a wrapper script — `bb-cli.sh` (Linux/macOS) or `bb-cli.ps1` (Windows). Both versions expose **identical commands, arguments, and JSON output shapes**, so all examples in this document work on either platform — just pick the invocation form that matches the host OS (see "Invocation by OS" below). The skill is optimized for Pull Request analysis—allowing agents to securely investigate PR diffs, review file changes one-by-one, and deliver strict, comprehensive code reviews. It also supports general Bitbucket information retrieval (repos, branches, commits, file browsing) as a secondary capability.
+
+### Invocation by OS
+
+The agent **MUST** detect the host OS and use the matching script. Pick **exactly one** form per call:
+
+| OS | Invocation form |
+|---|---|
+| Linux / macOS | `bash {baseDir}/bb-cli.sh <command> [args]` |
+| Windows | `pwsh -NoProfile -File "{baseDir}/bb-cli.ps1" <command> [args]` |
+
+Throughout the rest of this document, command examples are written as `{baseDir}/bb-cli.sh ...` for brevity. On Windows, substitute `pwsh -NoProfile -File "{baseDir}/bb-cli.ps1"` for `{baseDir}/bb-cli.sh` — every command, argument, and output shape is otherwise identical.
 
 ### ⚠️ Critical Rules for the Agent
 1. **Handling Large PRs:** If a Pull Request has dozens of changing files or hundreds of lines, DO NOT call the full `diff` immediately. **ALWAYS call `diffstat` first.** Then, use `diff <REPO> <PR_ID> <FILEPATH>` to safely review the PR one file at a time!
@@ -75,7 +90,11 @@ To use this skill, ensure the following environment variables are present in you
 - `BITBUCKET_API_TOKEN` — A strictly scoped token with **Repositories: Read** and **Pull requests: Read** only.
 - `BITBUCKET_WORKSPACE` — The workspace slug from the Bitbucket URL (e.g., `dbvisitsoftware`).
 
-*Note: The script is located at `{baseDir}/bb-cli.sh`. Ensure it has execute permissions (`chmod +x {baseDir}/bb-cli.sh`). `{baseDir}` resolves to the directory containing this SKILL.md file.*
+*Note: Two scripts ship side-by-side in `{baseDir}/`:*
+- *`bb-cli.sh` — used on Linux/macOS. Requires `curl` and `python3`. Ensure execute bit is set: `chmod +x {baseDir}/bb-cli.sh`.*
+- *`bb-cli.ps1` — used on Windows. Requires PowerShell 7+ (`pwsh`). No external dependencies.*
+
+*`{baseDir}` resolves to the directory containing this SKILL.md file. The two scripts are kept in lockstep: same commands, same arguments, same JSON shapes.*
 
 ---
 
